@@ -10,12 +10,13 @@ router.get('/', async (req, res) => {
     try {
         const { search, department, page = 1, limit = 10 } = req.query;
 
-        const currentPage = Math.max(1, +page);
-        const limitPerPage = Math.max(1, +limit);
+        const currentPage = Math.max(1, Number(page) || 1);
+        const limitPerPage = Math.max(1, Math.min(100, Number(limit) || 10));
 
         const offset = (currentPage - 1) * limitPerPage;
 
         const filterCondition = [];
+        const escapeLikePattern = (str: string) => str.replace(/[%_\\]/g, '\\$&');
 
     //      if search query exists, filter by subject name or subject code
         if (search) {
@@ -30,6 +31,20 @@ router.get('/', async (req, res) => {
     //     if department filter exists, match department name
         if (department) {
             filterCondition.push(ilike(departments.name, `%${department}%`));
+        }if (search) {
+            const escaped = escapeLikePattern(String(search));
+            filterCondition.push(
+                or(
+                    ilike(subjects.name, `%${escaped}%`),
+                    ilike(subjects.code, `%${escaped}%`),
+                )
+            );
+        }
+
+        //     if department filter exists, match department name
+        if (department) {
+            const escaped = escapeLikePattern(String(department));
+            filterCondition.push(ilike(departments.name, `%${escaped}%`));
         }
 
     //     Combine all filters using AND if any exists
