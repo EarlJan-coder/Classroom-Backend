@@ -20,18 +20,6 @@ router.get('/', async (req, res) => {
 
     //      if search query exists, filter by subject name or subject code
         if (search) {
-            filterCondition.push(
-              or(
-                  ilike(subjects.name, `%${search}%`),
-                  ilike(subjects.code, `%${search}%`),
-              )
-            );
-        }
-
-    //     if department filter exists, match department name
-        if (department) {
-            filterCondition.push(ilike(departments.name, `%${department}%`));
-        }if (search) {
             const escaped = escapeLikePattern(String(search));
             filterCondition.push(
                 or(
@@ -42,7 +30,7 @@ router.get('/', async (req, res) => {
         }
 
         //     if department filter exists, match department name
-        if (department) {
+        if (department && department !== 'all') {
             const escaped = escapeLikePattern(String(department));
             filterCondition.push(ilike(departments.name, `%${escaped}%`));
         }

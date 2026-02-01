@@ -8,6 +8,13 @@
       "when": 1769174593258,
       "tag": "0000_hot_doctor_octopus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1769938272292,
+      "tag": "0001_right_riptide",
+      "breakpoints": true
     }
   ]
 }
