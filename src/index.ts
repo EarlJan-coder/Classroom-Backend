@@ -6,7 +6,7 @@ import express from "express";
 import { toNodeHandler } from "better-auth/node";
 import subjectsRouter from "./routes/subjects.js";
 import { auth } from "./lib/auth.js";
-import securityMiddleware from "./middleware/security";
+import securityMiddleware from "./middleware/security.js";
 
 const app = express();
 const PORT = 8000;
