@@ -19,11 +19,6 @@ const aj = arcjet({
                 "CATEGORY:PREVIEW", // Link previews e.g. Slack, Discord
             ],
         }),
-        slidingWindow({
-            mode:'LIVE',
-            interval: '1m',
-            max: 5
-        })
     ],
 });
 
