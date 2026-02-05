@@ -5,6 +5,8 @@ import cors from "cors";
 import express from "express";
 import { toNodeHandler } from "better-auth/node";
 import subjectsRouter from "./routes/subjects.js";
+import usersRouter from "./routes/users.js";
+import classesRouter from "./routes/classes.js";
 import { auth } from "./lib/auth.js";
 import securityMiddleware from "./middleware/security.js";
 import { authMiddleware } from "./middleware/auth.js";
@@ -28,6 +30,8 @@ app.use(authMiddleware);
 app.use(securityMiddleware);
 
 app.use("/api/subjects", subjectsRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/classes", classesRouter);
 
 app.get("/", (req, res) => {
     res.send("Backend server is running!");
